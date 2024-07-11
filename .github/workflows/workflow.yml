@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run custom Python action
+      - name: Run custom action
         uses: ./.github/actions/actions-pull-request
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT }}
           title: 'My New Pull Request'
           head: 'feature-branch'
           base: 'main'
