@@ -92,9 +92,8 @@ def main():
     body = os.getenv("INPUT_BODY", "")
     commit_message = os.getenv("INPUT_COMMIT_MESSAGE")
 
-    # write a dummy file
-    print('###########')
-    print(repo,title,head,base,commit_message)
+    # TODO: write a dummy file
+
     if not all([token, repo, title, head, base, commit_message]):
         print("Missing required inputs", file=sys.stderr)
         sys.exit(1)
