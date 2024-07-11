@@ -1,2 +1,2 @@
 # actions-pull-request
-Use GitHub Actions App as the author of pull request and sign the commits too
+Use GitHub Actions App to create a pull request and sign the commits as github-actions

@@ -1,0 +1,19 @@
+name: 'Actions Pull Request'
+description: 'Use GitHub Actions App to create a pull request and sign the commits as github-actions'
+inputs:
+  token:
+    description: 'GitHub Token'
+    required: true
+  title:
+    description: 'Title of the pull request'
+    default: 'Created by actions-pull-request'
+  head:
+    description: 'Head branch'
+    required: true
+  base:
+    description: 'Base branch'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
