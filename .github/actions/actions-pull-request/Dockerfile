@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y git
 RUN pip install requests
 
 COPY main.py /main.py
-COPY .git* /
+COPY .git /.git/
 RUN ls -al
 RUN git status
 
