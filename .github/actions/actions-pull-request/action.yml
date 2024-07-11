@@ -17,6 +17,9 @@ inputs:
     description: 'Body of the pull request'
     required: false
     default: 'Written by actions-pull-request'
+  commit_message:
+    description: 'Commit by actions'
+    required: true
 
 runs:
   using: 'docker'
