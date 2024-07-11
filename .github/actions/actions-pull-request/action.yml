@@ -9,17 +9,20 @@ inputs:
     default: 'Created by actions-pull-request'
   head:
     description: 'Head branch'
-    required: true
+    required: false
+    default: actions-pull-request
   base:
     description: 'Base branch'
-    required: true
+    required: false
+    default: main
   body:
     description: 'Body of the pull request'
     required: false
     default: 'Written by actions-pull-request'
   commit_message:
-    description: 'Commit by actions'
+    description: 'A commit message'
     required: true
+    default: 'Commit by actions'
 
 runs:
   using: 'docker'
