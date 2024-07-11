@@ -29,6 +29,9 @@ def main():
     base = os.getenv("INPUT_BASE")
     body = os.getenv("INPUT_BODY", "")
 
+    print('##################')
+    print(repo, title, head, base)
+
     if not all([token, repo, title, head, base]):
         print("Missing required inputs", file=sys.stderr)
         sys.exit(1)
