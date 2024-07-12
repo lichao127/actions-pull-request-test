@@ -63,7 +63,8 @@ def commit_file(token, repo, path, content, message, branch):
         "message": message,
         "content": base64.b64encode(content.encode()).decode(),
         "branch": branch,
-        "sha": ""
+        "sha": "",
+        "force": True
     }
     if sha:
         payload["sha"] = sha
