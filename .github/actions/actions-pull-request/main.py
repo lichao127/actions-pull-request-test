@@ -5,6 +5,29 @@ import base64
 from datetime import datetime
 
 
+def create_branch(token, repo, branch, base_branch):
+    url = f"https://api.github.com/repos/{repo}/git/refs"
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json",
+    }
+    
+    # Get the SHA of the base branch
+    base_url = f"https://api.github.com/repos/{repo}/git/refs/heads/{base_branch}"
+    response = requests.get(base_url, headers=headers)
+    response.raise_for_status()
+    base_sha = response.json()["object"]["sha"]
+
+    payload = {
+        "ref": f"refs/heads/{branch}",
+        "sha": base_sha
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+
 def get_file_sha(token, repo, path, branch):
     url = f"https://api.github.com/repos/{repo}/contents/{path}?ref={branch}"
     headers = {
@@ -16,6 +39,8 @@ def get_file_sha(token, repo, path, branch):
     if response.status_code == 200:
         return response.json()["sha"]
     elif response.status_code == 404:
+        # create the branch
+        create_branch(token, repo, branch, base_branch)
         return None
     else:
         response.raise_for_status()
@@ -84,9 +109,7 @@ def main():
     new_content_raw = now.strftime("%Y-%m-%d-%H-%M")
 
     try:
-        print('&&&&&&&&&&&&&&&&')
         sha = get_file_sha(token, repo, file_path, head)
-        print('####################')
         new_content = base64.b64encode(new_content_raw.encode()).decode()
 
         if sha:
