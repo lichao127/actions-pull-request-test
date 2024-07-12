@@ -11,7 +11,7 @@ def create_branch(token, repo, branch, base_branch):
     url = f"https://api.github.com/repos/{repo}/git/refs"
     headers = {
         "Authorization": f"token {token}",
-        "Accept": {ACCEPT_HEADER},
+        "Accept": ACCEPT_HEADER,
     }
     
     # Get the SHA of the base branch
@@ -38,7 +38,7 @@ def get_file_sha(token, repo, path, branch):
     url = f"https://api.github.com/repos/{repo}/contents/{path}?ref={branch}"
     headers = {
         "Authorization": f"token {token}",
-        "Accept": {ACCEPT_HEADER},
+        "Accept": ACCEPT_HEADER,
     }
 
     response = requests.get(url, headers=headers)
@@ -57,7 +57,7 @@ def commit_file(token, repo, path, content, message, branch):
     url = f"https://api.github.com/repos/{repo}/contents/{path}"
     headers = {
         "Authorization": f"token {token}",
-        "Accept": {ACCEPT_HEADER},
+        "Accept": ACCEPT_HEADER,
     }
     payload = {
         "message": message,
@@ -79,7 +79,7 @@ def create_pull_request(token, repo, title, head, base, body=""):
     url = f"https://api.github.com/repos/{repo}/pulls"
     headers = {
         "Authorization": f"token {token}",
-        "Accept": {ACCEPT_HEADER},
+        "Accept": ACCEPT_HEADER,
     }
     payload = {
         "title": title,
@@ -124,7 +124,7 @@ def main():
             url = f"https://api.github.com/repos/{repo}/contents/{file_path}?ref={head}"
             headers = {
                 "Authorization": f"token {token}",
-                "Accept": {ACCEPT_HEADER},
+                "Accept": ACCEPT_HEADER,
             }
 
             response = requests.get(url, headers=headers)
