@@ -84,7 +84,9 @@ def main():
     new_content_raw = now.strftime("%Y-%m-%d-%H-%M")
 
     try:
+        print('&&&&&&&&&&&&&&&&')
         sha = get_file_sha(token, repo, file_path, head)
+        print('####################')
         new_content = base64.b64encode(new_content_raw.encode()).decode()
 
         if sha:
