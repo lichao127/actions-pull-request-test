@@ -73,7 +73,7 @@ def main():
     file_path = os.getenv("INPUT_FILE_PATH")
     commit_message = os.getenv("INPUT_COMMIT_MESSAGE")
 
-    if not all([token, repo, title, head, base, file_path, file_content, commit_message]):
+    if not all([token, repo, title, head, base, file_path, commit_message]):
         print("Missing required inputs", file=sys.stderr)
         sys.exit(1)
 
