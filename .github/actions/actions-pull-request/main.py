@@ -64,6 +64,7 @@ def commit_file(token, repo, path, content, message, branch):
     }
     if sha:
         payload["sha"] = sha
+    print(url)
     print('im here')
     response = requests.put(url, json=payload, headers=headers)
     if response.status_code == 422:
