@@ -103,7 +103,7 @@ def main():
 
         print("Changes detected. Committing and creating pull request.")
 
-        commit_file(token, repo, file_path, file_content, commit_message, head)
+        commit_file(token, repo, file_path, new_content, commit_message, head)
         pr = create_pull_request(token, repo, title, head, base, body)
         print(f"Pull request created: {pr['html_url']}")
 
