@@ -23,6 +23,7 @@ def create_branch(token, repo, branch, base_branch):
         "sha": base_sha
     }
 
+    # create new branch
     response = requests.post(url, json=payload, headers=headers)
     # 422 is when entity exists
     if response.status_code == 422:
@@ -59,7 +60,7 @@ def commit_file(token, repo, path, content, message, branch):
     }
     payload = {
         "message": message,
-        "content": content,
+        "content": base64.b64encode(content.encode()).decode(),
         "branch": branch,
         "sha": ""
     }
