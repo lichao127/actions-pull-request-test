@@ -43,6 +43,8 @@ def get_file_sha(token, repo, path, branch):
         return response.json()["sha"]
     elif response.status_code == 404:
         return None
+    elif response.status_code == 422:
+        return None
     else:
         response.raise_for_status()
 
