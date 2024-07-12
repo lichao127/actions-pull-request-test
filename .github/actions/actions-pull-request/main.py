@@ -6,6 +6,7 @@ from datetime import datetime
 
 ACCEPT_HEADER = "application/vnd.github.v3+json"
 
+#TODO: check existing PR and force 1 commit
 
 def create_branch(token, repo, branch, base_branch):
     url = f"https://api.github.com/repos/{repo}/git/refs"
@@ -64,7 +65,6 @@ def commit_file(token, repo, path, content, message, branch):
         "content": base64.b64encode(content.encode()).decode(),
         "branch": branch,
         "sha": "",
-        "force": True
     }
     if sha:
         payload["sha"] = sha
