@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: check context
+        run: echo "${{github.actor}}"
       - name: Run custom action
         uses: ./.github/actions/actions-pull-request
         with:
