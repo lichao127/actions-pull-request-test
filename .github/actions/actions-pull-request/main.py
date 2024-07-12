@@ -39,8 +39,6 @@ def get_file_sha(token, repo, path, branch):
     if response.status_code == 200:
         return response.json()["sha"]
     elif response.status_code == 404:
-        # create the branch
-        create_branch(token, repo, branch, base_branch)
         return None
     else:
         response.raise_for_status()
@@ -125,6 +123,9 @@ def main():
             if current_content == new_content:
                 print("No changes detected. Exiting.")
                 sys.exit(0)
+
+        print(f"Creating branch.")
+        create_branch(token, repo, head, base)
 
         print("Changes detected. Committing and creating pull request.")
 
