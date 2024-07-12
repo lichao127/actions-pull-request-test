@@ -60,7 +60,8 @@ def commit_file(token, repo, path, content, message, branch):
     payload = {
         "message": message,
         "content": content,
-        "branch": branch
+        "branch": branch,
+        "sha": ""
     }
     if sha:
         payload["sha"] = sha
