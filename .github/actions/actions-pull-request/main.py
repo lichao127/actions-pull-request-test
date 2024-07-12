@@ -71,8 +71,8 @@ def commit_file(token, repo, path, content, message, branch):
     if response.status_code == 422:
         print('failed to commit')
         return
-    else:
-        response.raise_for_status()
+
+    response.raise_for_status()
 
 
 def create_pull_request(token, repo, title, head, base, body=""):
@@ -140,8 +140,8 @@ def main():
         print("Changes detected. Committing and creating pull request.")
 
         commit_file(token, repo, file_path, new_content, commit_message, head)
-        pr = create_pull_request(token, repo, title, head, base, body)
-        print(f"Pull request created: {pr['html_url']}")
+        #pr = create_pull_request(token, repo, title, head, base, body)
+        #print(f"Pull request created: {pr['html_url']}")
 
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}", file=sys.stderr)
