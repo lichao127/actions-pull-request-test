@@ -1,28 +1,8 @@
 import os
 import sys
-import subprocess
 import requests
 import base64
 from datetime import datetime
-
-
-def run_command(command):
-    result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    if result.returncode != 0:
-        print(f"Command failed: {command}", file=sys.stderr)
-        print(result.stderr.decode(), file=sys.stderr)
-        sys.exit(result.returncode)
-    return result.stdout.decode().strip()
-
-
-def get_changed_files():
-    changed_files = run_command("git diff --name-only HEAD~1 HEAD")
-    return changed_files.splitlines()
-
-
-def get_file_content(file_path):
-    with open(file_path, "r") as file:
-        return file.read()
 
 
 def get_file_sha(token, repo, path, branch):
@@ -90,29 +70,40 @@ def main():
     head = os.getenv("INPUT_HEAD")
     base = os.getenv("INPUT_BASE")
     body = os.getenv("INPUT_BODY", "")
+    file_path = os.getenv("INPUT_FILE_PATH")
     commit_message = os.getenv("INPUT_COMMIT_MESSAGE")
 
-    # TODO: write a dummy file
-
-    if not all([token, repo, title, head, base, commit_message]):
+    if not all([token, repo, title, head, base, file_path, file_content, commit_message]):
         print("Missing required inputs", file=sys.stderr)
         sys.exit(1)
 
-    print("Detecting changes...")
+    print(f"Checking for changes in file: {file_path} on branch: {head}")
+
+    # generate new content
+    now = datetime.now()
+    new_content_raw = now.strftime("%Y-%m-%d-%H-%M")
 
     try:
-        changed_files = get_changed_files()
-        if not changed_files:
-            print("No changes detected. Exiting.")
-            sys.exit(0)
+        sha = get_file_sha(token, repo, file_path, head)
+        new_content = base64.b64encode(new_content_raw.encode()).decode()
 
-        print("Changes detected in the following files:")
-        for file_path in changed_files:
-            print(file_path)
-            file_content = get_file_content(file_path)
-            commit_file(token, repo, file_path, file_content, commit_message, head)
+        if sha:
+            url = f"https://api.github.com/repos/{repo}/contents/{file_path}?ref={head}"
+            headers = {
+                "Authorization": f"token {token}",
+                "Accept": "application/vnd.github.v3+json",
+            }
 
-        print("Committing changes and creating pull request.")
+            response = requests.get(url, headers=headers)
+            current_content = response.json()["content"].strip()
+
+            if current_content == new_content:
+                print("No changes detected. Exiting.")
+                sys.exit(0)
+
+        print("Changes detected. Committing and creating pull request.")
+
+        commit_file(token, repo, file_path, file_content, commit_message, head)
         pr = create_pull_request(token, repo, title, head, base, body)
         print(f"Pull request created: {pr['html_url']}")
 

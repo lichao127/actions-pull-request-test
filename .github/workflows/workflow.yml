@@ -14,4 +14,5 @@ jobs:
           title: 'My New Pull Request'
           head: 'feature-branch'
           base: 'main'
-          
+          file_path: 'timestamp-yyyy-mm-dd-hh-mm'
+          commit_message: 'Update file.txt'

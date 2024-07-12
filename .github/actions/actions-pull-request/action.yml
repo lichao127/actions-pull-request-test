@@ -23,6 +23,9 @@ inputs:
     description: 'A commit message'
     required: true
     default: 'Commit by actions'
+  file_path:
+    description: 'Path of the file to commit'
+    required: true
 
 runs:
   using: 'docker'
