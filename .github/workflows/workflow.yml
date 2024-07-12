@@ -16,7 +16,7 @@ jobs:
       - name: Run custom action
         uses: ./.github/actions/actions-pull-request
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           head: 'actions-update-branch'
           base: 'main'
           file_path: 'timestamp-yyyy-mm-dd-hh-mm'
