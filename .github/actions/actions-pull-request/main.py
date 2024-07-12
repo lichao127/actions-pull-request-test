@@ -24,12 +24,11 @@ def create_branch(token, repo, branch, base_branch):
     }
 
     response = requests.post(url, json=payload, headers=headers)
+    # 422 is when entity exists
     if response.status_code == 422:
-        return response.json()["sha"]
-    elif response.status_code == 404:
         return None
-    response.raise_for_status()
-    return response.json()
+    else:
+        response.raise_for_status()
 
 
 def get_file_sha(token, repo, path, branch):
