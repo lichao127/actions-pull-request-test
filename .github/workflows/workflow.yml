@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: check context
+        run: echo "$GITHUB_CONTEXT"
       - name: Run custom action
         uses: ./.github/actions/actions-pull-request
         with:
@@ -19,5 +21,3 @@ jobs:
           base: 'main'
           file_path: 'timestamp-yyyy-mm-dd-hh-mm'
           commit_message: 'Update file.txt'
-      - name: check context
-        run: echo "$GITHUB_CONTEXT"
