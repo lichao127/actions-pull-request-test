@@ -70,6 +70,7 @@ def commit_file(token, repo, path, content, message, branch):
 
 
 def create_pull_request(token, repo, title, head, base, body=""):
+    print('creating pr')
     url = f"https://api.github.com/repos/{repo}/pulls"
     headers = {
         "Authorization": f"token {token}",
@@ -82,7 +83,7 @@ def create_pull_request(token, repo, title, head, base, body=""):
         "body": body,
     }
 
-    
+    print('im here')
     try:
         response = requests.post(url, json=payload, headers=headers)
         response.raise_for_status()
