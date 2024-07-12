@@ -24,6 +24,10 @@ def create_branch(token, repo, branch, base_branch):
     }
 
     response = requests.post(url, json=payload, headers=headers)
+    if response.status_code == 422:
+        return response.json()["sha"]
+    elif response.status_code == 404:
+        return None
     response.raise_for_status()
     return response.json()
 
@@ -53,7 +57,7 @@ def commit_file(token, repo, path, content, message, branch):
     }
     payload = {
         "message": message,
-        "content": base64.b64encode(content.encode()).decode(),
+        "content": content,
         "branch": branch
     }
     if sha:
@@ -104,11 +108,10 @@ def main():
 
     # generate new content
     now = datetime.now()
-    new_content_raw = now.strftime("%Y-%m-%d-%H-%M")
+    new_content = now.strftime("%Y-%m-%d-%H-%M")
 
     try:
         sha = get_file_sha(token, repo, file_path, head)
-        new_content = base64.b64encode(new_content_raw.encode()).decode()
 
         if sha:
             url = f"https://api.github.com/repos/{repo}/contents/{file_path}?ref={head}"
@@ -124,7 +127,7 @@ def main():
                 print("No changes detected. Exiting.")
                 sys.exit(0)
 
-        print(f"Creating branch.")
+        print(f"Creating branch if not exist.")
         create_branch(token, repo, head, base)
 
         print("Changes detected. Committing and creating pull request.")

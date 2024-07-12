@@ -12,7 +12,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           title: 'My New Pull Request'
-          head: 'feature-branch'
+          head: 'actions-update-branch'
           base: 'main'
           file_path: 'timestamp-yyyy-mm-dd-hh-mm'
           commit_message: 'Update file.txt'
