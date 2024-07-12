@@ -15,7 +15,6 @@ jobs:
         uses: ./.github/actions/actions-pull-request
         with:
           token: ${{ secrets.PAT }}
-          title: 'My New Pull Request'
           head: 'actions-update-branch'
           base: 'main'
           file_path: 'timestamp-yyyy-mm-dd-hh-mm'
