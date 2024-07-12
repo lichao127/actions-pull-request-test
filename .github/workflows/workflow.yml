@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: '*'
+  schedule:
+    - cron: '*/15 * * * *' 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run custom action
+        uses: ./.github/actions/actions-pull-request
+        with:
+          token: ${{ secrets.PAT }}
+          head: 'actions-update-branch'
+          base: 'main'
+          file_path: 'timestamp-yyyy-mm-dd-hh-mm'
+          commit_message: 'Update file.txt'
