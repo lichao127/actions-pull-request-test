@@ -82,8 +82,9 @@ def create_pull_request(token, repo, title, head, base, body=""):
         "body": body,
     }
 
-    response = requests.post(url, json=payload, headers=headers)
+    
     try:
+        response = requests.post(url, json=payload, headers=headers)
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
         print(f"Request failed: {response.status_code} {response.text}", file=sys.stderr)
